@@ -2,9 +2,9 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <div>
-      <p>Footer</p>
-    </div>
+    <footer className="w-11/12 mx-auto px-2 py-5">
+      <p>footer</p>
+    </footer>
   );
 };
 
