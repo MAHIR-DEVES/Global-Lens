@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,19 +14,25 @@ import { Switch } from '@/Components/ui/switch';
 import { Button } from '@/Components/ui/button';
 import { usePathname } from 'next/navigation';
 import MobileMenu from '@/Components/MonileMenu/MobileMenu';
+import { ThemeContext } from '@/Context/ThemeContext';
 
 const Navbar = () => {
   const pathname = usePathname();
 
-  // hydration mismatch এড়ানোর জন্য state এবং useEffect ব্যবহার করছি
   const [currentPath, setCurrentPath] = useState<string | null>(null);
 
   useEffect(() => {
     setCurrentPath(pathname);
   }, [pathname]);
 
+  const { isDarkMode, toggleTheme }: any = useContext(ThemeContext);
+
   return (
-    <header className="py-3 sm:py-4 shadow">
+    <header
+      className={`py-3 sm:py-4 shadow ${
+        isDarkMode ? 'bg-gray-900 text-white' : ''
+      }`}
+    >
       <nav className="w-11/12 mx-auto px-2 flex justify-between items-center">
         {/* logo */}
         <div className="flex items-center">
@@ -118,7 +124,7 @@ const Navbar = () => {
 
         {/* color switcher and login btn */}
         <div className="flex items-center gap-3 justify-between hidden sm:flex">
-          <div className="flex items-center ">
+          <div onClick={toggleTheme} className="flex items-center ">
             <span className="mr-3 font-semibold">Dark Mode</span>
             <Switch />
           </div>
